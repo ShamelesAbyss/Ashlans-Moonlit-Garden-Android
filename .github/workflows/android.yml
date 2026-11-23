@@ -33,11 +33,15 @@ jobs:
         run: ./gradlew --no-daemon :app:assembleDebug
       - name: Run native UI smoke test and capture the garden
         uses: reactivecircus/android-emulator-runner@v2
+        # Hosted runners can lack KVM; the emulator explicitly requires TCG opt-in with -accel off.
+        env:
+          ANDROID_I_WANT_MY_TCG: "yes"
         with:
           api-level: 35
           arch: x86_64
           target: google_apis
           profile: pixel_2
+          emulator-boot-timeout: 900
           disable-animations: true
           script: |
             ./gradlew --no-daemon :app:connectedDebugAndroidTest
