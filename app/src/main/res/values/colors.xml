@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="moonlit_background">#130D21</color>
+    <color name="moonlit_surface">#21172F</color>
+    <color name="moonlit_accent">#C7A3F2</color>
+    <color name="launcher_background">#130D21</color>
+    <color name="splash_background">#130D21</color>
+</resources>

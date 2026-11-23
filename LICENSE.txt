@@ -1,0 +1,5 @@
+Copyright © 2026 ShamelesAbyss. All rights reserved.
+
+This repository is publicly visible for reference and collaboration under the contribution boundaries in CONTRIBUTING.md. Public visibility does not grant permission to copy, modify, redistribute, sublicense, or create derivative works from this software, artwork, characters, music, story, or other project materials. No open-source license is granted.
+
+For any additional permissions, contact the project owner through the repository's listed channels. No signing keys, credentials, private saves, or personal journal content are part of this repository.

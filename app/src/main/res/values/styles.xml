@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MoonlitGarden" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_icon</item>
+        <item name="postSplashScreenTheme">@style/Theme.MoonlitGarden.Base</item>
+    </style>
+    <style name="Theme.MoonlitGarden.Base" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">#130D21</item>
+        <item name="android:navigationBarColor">#130D21</item>
+        <item name="android:windowBackground">#130D21</item>
+        <item name="android:colorAccent">#C7A5EF</item>
+    </style>
+</resources>

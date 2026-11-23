@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 520" role="img" aria-labelledby="title desc">
+  <title id="title">Ashlan’s Moonlit Garden — Moonlit Rebirth</title>
+  <desc id="desc">A warm witch’s cottage, crescent moon, violet garden flowers and black familiar beneath a starry purple sky.</desc>
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#100b20"/><stop offset=".62" stop-color="#24143a"/><stop offset="1" stop-color="#3a274b"/></linearGradient>
+    <linearGradient id="hill" x2="0" y2="1"><stop stop-color="#26364a"/><stop offset="1" stop-color="#111b2b"/></linearGradient>
+    <radialGradient id="moonGlow"><stop stop-color="#f2dfbf" stop-opacity=".28"/><stop offset="1" stop-color="#b08ae2" stop-opacity="0"/></radialGradient>
+    <linearGradient id="window" x2="0" y2="1"><stop stop-color="#fff1c2"/><stop offset="1" stop-color="#e79d72"/></linearGradient>
+    <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1440" height="520" rx="28" fill="url(#sky)"/>
+  <circle cx="1110" cy="112" r="180" fill="url(#moonGlow)"/>
+  <g fill="#f1e8db">
+    <circle cx="884" cy="63" r="2"/><circle cx="967" cy="136" r="3"/><circle cx="1247" cy="54" r="2"/>
+    <circle cx="1370" cy="141" r="2"/><circle cx="746" cy="116" r="2"/><circle cx="810" cy="188" r="3"/>
+    <circle cx="1046" cy="207" r="2"/><circle cx="1291" cy="230" r="2"/><circle cx="920" cy="244" r="2"/>
+    <path d="m1001 78 5 13 13 5-13 5-5 13-5-13-13-5 13-5z"/><path d="m1333 194 4 10 10 4-10 4-4 10-4-10-10-4 10-4z"/>
+  </g>
+  <circle cx="1125" cy="112" r="76" fill="#f2dfbd"/>
+  <circle cx="1154" cy="88" r="72" fill="#191027"/>
+  <path d="M0 351c164-69 280-43 426-22 147 21 245 7 375-40 174-63 361-27 639 45v186H0z" fill="url(#hill)"/>
+  <path d="M0 415c193-59 339-44 505-13 156 30 333 20 478-12 156-34 310-16 457 15v115H0z" fill="#111a2a"/>
+  <!-- Cottage -->
+  <ellipse cx="550" cy="393" rx="220" ry="36" fill="#ffd98d" opacity=".11" filter="url(#softGlow)"/>
+  <path d="M300 289 540 171l240 118v154H300z" fill="#332342" stroke="#b18ab9" stroke-width="5"/>
+  <path d="M268 300 540 150l272 150-27 22-245-132-245 132z" fill="#62436c" stroke="#c39cc8" stroke-width="5"/>
+  <path d="M337 273V220l82-44v92zM664 268v-75l73 39v71z" fill="#493052"/>
+  <path d="M373 317h80v126h-80z" fill="#25182f" stroke="#b489a6" stroke-width="5"/>
+  <path d="M395 335h36v50h-36z" fill="url(#window)"/><path d="M395 335h36v50h-36z" fill="none" stroke="#72506e" stroke-width="5"/>
+  <path d="M411 335v50m-16-25h36" stroke="#72506e" stroke-width="4"/>
+  <path d="M492 315h96v128h-96z" fill="#28192f" stroke="#a37b99" stroke-width="5"/>
+  <path d="M512 335h57v49h-57z" fill="url(#window)"/><path d="M512 335h57v49h-57z" fill="none" stroke="#67496b" stroke-width="5"/>
+  <path d="M540 335v49m-28-25h57" stroke="#67496b" stroke-width="4"/>
+  <path d="M617 315h85v128h-85z" fill="#28192f" stroke="#a37b99" stroke-width="5"/>
+  <path d="M636 335h47v49h-47z" fill="url(#window)"/><path d="M636 335h47v49h-47z" fill="none" stroke="#67496b" stroke-width="5"/>
+  <path d="M659 335v49m-23-25h47" stroke="#67496b" stroke-width="4"/>
+  <path d="M696 196v-84h31v101z" fill="#35213e" stroke="#9b76a5" stroke-width="5"/><path d="M690 111h43v14h-43z" fill="#c39cc8"/>
+  <circle cx="601" cy="404" r="5" fill="#f5d88e"/>
+  <!-- Pixel path and flowers -->
+  <path d="M425 443c-61 29-57 43 19 55 67 10 118 6 162 22" fill="none" stroke="#ae927e" stroke-width="16" stroke-dasharray="30 13"/>
+  <g stroke="#77947c" stroke-width="5" fill="none"><path d="M72 498c39-56 49-96 31-137m0 31c-30-12-43-29-47-51m46 22c30-14 44-31 49-56"/><path d="M1368 505c-37-60-45-99-25-142m-1 34c27-13 39-31 44-53m-43 25c-29-14-42-31-47-57"/></g>
+  <g fill="#d5a8ed"><circle cx="50" cy="330" r="12"/><circle cx="60" cy="318" r="8"/><circle cx="88" cy="357" r="13"/><circle cx="1393" cy="351" r="12"/><circle cx="1365" cy="333" r="10"/><circle cx="1327" cy="379" r="13"/></g>
+  <g fill="#f0d799"><circle cx="74" cy="338" r="4"/><circle cx="1388" cy="359" r="4"/><circle cx="1326" cy="386" r="4"/></g>
+  <!-- Familiar silhouette -->
+  <g transform="translate(190 382)"><ellipse cx="0" cy="50" rx="50" ry="15" fill="#080811" opacity=".45"/><path d="M-39 39c-14-47 5-74 40-74 34 0 50 30 38 74-3 20-22 28-42 28-18 0-32-7-36-28z" fill="#0c0a17"/><path d="m-34-9 3-36 25 18m31 19-1-36-26 18" fill="#0c0a17"/><path d="M31 40c40 0 50-25 48-44 23 15 22 52-3 61-15 5-32-2-45-17" fill="#0c0a17"/><circle cx="-14" cy="-6" r="4" fill="#efd486"/><circle cx="13" cy="-6" r="4" fill="#efd486"/><path d="M-3 8h7l-3 5z" fill="#bd91c5"/><path d="M-7 2h22" stroke="#c8a4d2" stroke-width="4"/></g>
+  <!-- Crystal sparks -->
+  <path d="m914 385 17-44 18 44-18 31z" fill="#a984d2" opacity=".8"/><path d="m964 408 11-28 12 28-12 22z" fill="#d0a9ec" opacity=".7"/>
+  <g font-family="Georgia, 'Times New Roman', serif" text-anchor="start">
+    <text x="82" y="114" fill="#e1bee8" font-size="16" letter-spacing="6">PROJECT MOONLIT REBIRTH</text>
+    <text x="78" y="185" fill="#fff1dc" font-size="51" font-weight="bold">Ashlan’s Moonlit</text>
+    <text x="78" y="246" fill="#d6b3ec" font-size="58" font-weight="bold">Garden</text>
+    <path d="M82 271h430" stroke="#9a74ae" stroke-width="2"/>
+    <text x="84" y="306" fill="#d9c9dc" font-size="18">A little cottage beneath a violet moon.</text>
+    <text x="84" y="337" fill="#d9c9dc" font-size="18">A watchful familiar. A place kept with love.</text>
+    <text x="84" y="475" fill="#f1dba9" font-size="17" font-style="italic">For Ashlan, always loved.</text>
+  </g>
+</svg>
