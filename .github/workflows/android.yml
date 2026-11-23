@@ -31,7 +31,7 @@ jobs:
         run: ./gradlew --no-daemon :app:testDebugUnitTest
       - name: Build installable debug-signed development APK
         run: ./gradlew --no-daemon :app:assembleDebug
-      - name: Run native UI smoke test and capture the garden
+      - name: Launch native APK on emulator and capture the garden
         uses: reactivecircus/android-emulator-runner@v2
         # Hosted runners can lack KVM; the emulator explicitly requires TCG opt-in with -accel off.
         env:
@@ -44,13 +44,47 @@ jobs:
           emulator-boot-timeout: 900
           disable-animations: true
           script: |
-            ./gradlew --no-daemon :app:connectedDebugAndroidTest
-            mkdir -p app/build/screenshots
-            adb shell am force-stop com.shamelesabyss.ashlansmoonlitgarden.native
-            adb shell am start -n com.shamelesabyss.ashlansmoonlitgarden.native/com.shamelesabyss.moonlitgarden.MainActivity
-            sleep 10
+            set -eu
+            APP_ID=com.shamelesabyss.ashlansmoonlitgarden.native
+            MAIN_ACTIVITY=com.shamelesabyss.moonlitgarden.MainActivity
+            DIAG_DIR=app/build/reports/emulator-smoke
+            mkdir -p app/build/screenshots "$DIAG_DIR"
+            adb install -r app/build/outputs/apk/debug/app-debug.apk
+            adb logcat -c
+            adb shell am force-stop "$APP_ID"
+            if ! adb shell am start -W -n "$APP_ID/$MAIN_ACTIVITY" > "$DIAG_DIR/activity-start.txt" 2>&1; then
+              adb logcat -d -b all > "$DIAG_DIR/logcat.txt" || true
+              cat "$DIAG_DIR/activity-start.txt"
+              exit 1
+            fi
+            started=false
+            for attempt in $(seq 1 60); do
+              if adb shell pidof "$APP_ID" 2>/dev/null | tr -d '\r' | grep -Eq '[0-9]'; then
+                started=true
+                break
+              fi
+              sleep 2
+            done
+            adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' > "$DIAG_DIR/resumed-activity.txt" || true
+            if [ "$started" != true ] || ! grep -F "$APP_ID" "$DIAG_DIR/resumed-activity.txt" > /dev/null; then
+              adb logcat -d -b all > "$DIAG_DIR/logcat.txt" || true
+              echo "Native activity did not remain running in the foreground."
+              cat "$DIAG_DIR/activity-start.txt"
+              cat "$DIAG_DIR/resumed-activity.txt"
+              exit 1
+            fi
+            sleep 5
             adb shell screencap -p /sdcard/moonlit-garden.png
             adb pull /sdcard/moonlit-garden.png app/build/screenshots/native-garden.png
+            test -s app/build/screenshots/native-garden.png
+            printf 'APK installed; MainActivity remained foreground; emulator screenshot captured.\n' > "$DIAG_DIR/result.txt"
+      - name: Upload emulator launch diagnostics on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: moonlit-rebirth-emulator-diagnostics-${{ github.sha }}
+          path: app/build/reports/emulator-smoke/
+          if-no-files-found: ignore
       - name: Verify package, debug identity, alignment and checksum
         shell: bash
         run: |
@@ -61,6 +95,11 @@ jobs:
           BADGING="$("$TOOLS/aapt" dump badging "$APK")"
           printf '%s\n' "$BADGING" | grep -F "package: name='com.shamelesabyss.ashlansmoonlitgarden.native' versionCode='100' versionName='1.0.0'"
           printf '%s\n' "$BADGING" | grep -q '^application-debuggable'
+          PERMISSIONS=$("$TOOLS/aapt" dump permissions "$APK")
+          if printf '%s\n' "$PERMISSIONS" | grep -Fq 'android.permission.INTERNET'; then
+            echo 'The offline app unexpectedly declares INTERNET permission.' >&2
+            exit 1
+          fi
           "$TOOLS/apksigner" verify --verbose --print-certs "$APK" > app/build/outputs/apk/debug/signing.txt
           grep -F 'Number of signers: 1' app/build/outputs/apk/debug/signing.txt
           "$TOOLS/zipalign" -c -v 4 "$APK"
