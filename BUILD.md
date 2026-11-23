@@ -21,7 +21,7 @@ The app's stable ID is `com.shamelesabyss.ashlansmoonlitgarden.native`; it is de
 
 ## Reproducible CI
 
-GitHub Actions runs the JVM domain/migration suite, assembles debug and release variants, verifies package/version, the debug signature, APK alignment, and SHA-256, then uploads build evidence. Version tags publish an accurately labeled debug-signed development APK. A consistent production signing identity is not present; no keystore or credential is checked in.
+GitHub Actions runs the JVM domain/migration suite, assembles the debug variant, verifies package/version, the debug signature, APK alignment, and SHA-256, then uploads build evidence. `assembleRelease` is available for optional local validation but is not part of CI; the public artifact is the debug-signed development build. Version tags publish an accurately labeled debug-signed development APK. A consistent production signing identity is not present; no keystore or credential is checked in.
 
 The workflow provisions Android SDK packages through [`android-actions/setup-android`](https://github.com/android-actions/setup-android) using its documented space-separated package list; it does not request the retired `tools` package.
 

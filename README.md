@@ -94,10 +94,10 @@ Requires a JDK 17+ and Android SDK Platform 35 / Build Tools 35.0.0. From the re
 
 ```sh
 ./gradlew --no-daemon :app:testDebugUnitTest
-./gradlew --no-daemon :app:assembleDebug :app:assembleRelease
+./gradlew --no-daemon :app:assembleDebug
 ```
 
-The installable development APK is `app/build/outputs/apk/debug/app-debug.apk`. The release variant is an unsigned build-validation output when no production signing key is configured. Never distribute it as a production release.
+The installable development APK is `app/build/outputs/apk/debug/app-debug.apk`. CI builds and verifies this debug-signed development variant. `:app:assembleRelease` is an optional local build-validation task; when no production signing key is configured, its output is unsigned and must not be distributed as a production release.
 
 The development environment used for the first build attempt is ARM64, while Android Gradle Plugin’s AAPT2 binary in the installed SDK is x86-64; resource processing therefore cannot be verified locally there. The supported x86 GitHub Actions build is being used for authoritative build/test results. **Check the Actions badge and run artifacts for actual status.** No successful test, emulator screenshot, or device installation is claimed by this README without that evidence.
 

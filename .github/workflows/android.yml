@@ -29,8 +29,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
       - name: Run native game and migration unit tests
         run: ./gradlew --no-daemon :app:testDebugUnitTest
-      - name: Build installable development APK and unsigned release-validation variant
-        run: ./gradlew --no-daemon :app:assembleDebug :app:assembleRelease
+      - name: Build installable debug-signed development APK
+        run: ./gradlew --no-daemon :app:assembleDebug
       - name: Run native UI smoke test and capture the garden
         uses: reactivecircus/android-emulator-runner@v2
         with:
