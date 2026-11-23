@@ -506,7 +506,7 @@ private fun JournalControls(garden: GardenState, viewModel: GardenViewModel) {
         Spacer(Modifier.height(8.dp))
         OutlinedTextField(
             value = viewModel.journalDraft,
-            onValueChange = viewModel::setJournalDraft,
+            onValueChange = viewModel::updateJournalDraft,
             modifier = Modifier.fillMaxWidth(),
             label = { Text("A memory, a thought, a little detail") },
             placeholder = { Text("Write whatever you wish to keep…") },

@@ -216,7 +216,7 @@ class GardenViewModel(application: Application) : AndroidViewModel(application) 
         persist()
     }
 
-    fun setJournalDraft(text: String) {
+    fun updateJournalDraft(text: String) {
         journalDraft = text.take(20_000)
         draftJob?.cancel()
         draftJob = viewModelScope.launch {
