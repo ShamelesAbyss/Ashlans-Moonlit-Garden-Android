@@ -23,6 +23,8 @@ The app's stable ID is `com.shamelesabyss.ashlansmoonlitgarden.native`; it is de
 
 GitHub Actions runs the JVM domain/migration suite, assembles debug and release variants, verifies package/version, the debug signature, APK alignment, and SHA-256, then uploads build evidence. Version tags publish an accurately labeled debug-signed development APK. A consistent production signing identity is not present; no keystore or credential is checked in.
 
+The workflow provisions Android SDK packages through [`android-actions/setup-android`](https://github.com/android-actions/setup-android) using its documented space-separated package list; it does not request the retired `tools` package.
+
 ## What builds do not prove
 
 A successful Gradle build does not establish device-specific gameplay quality, audible playback, foldable behavior on every device, or a production signing identity. No Android hardware/emulator test is claimed unless its result is attached to that build. Check the GitHub Actions run linked from the release for the exact test result.

@@ -1,18 +1,20 @@
 package com.shamelesabyss.moonlitgarden.domain
 
 import com.shamelesabyss.moonlitgarden.data.GardenState
+import org.json.JSONArray
+import org.json.JSONObject
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertThrows
 import org.junit.Test
 
 class SaveMigrationTest {
     @Test fun rejectsAnUnsupportedSaveVersion() {
-        val json = GardenState.fresh().toLegacyJson().replace("\"version\": 1", "\"version\": 2")
+        val json = JSONObject(GardenState.fresh().toLegacyJson()).put("version", 2).toString()
         assertThrows(IllegalArgumentException::class.java) { GardenState.fromLegacyJson(json) }
     }
 
     @Test fun rejectsSavesThatWouldLoseOneOfTheNineBeds() {
-        val json = GardenState.fresh().toLegacyJson().replace("[\n      null,\n      null,\n      null,\n      null,\n      null,\n      null,\n      null,\n      null,\n      null\n    ]", "[]")
+        val json = JSONObject(GardenState.fresh().toLegacyJson()).put("beds", JSONArray()).toString()
         assertThrows(IllegalArgumentException::class.java) { GardenState.fromLegacyJson(json) }
     }
 
