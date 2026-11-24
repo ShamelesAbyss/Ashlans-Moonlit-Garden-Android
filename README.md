@@ -39,7 +39,15 @@ The original private repository remains private and untouched. This new reposito
 </table>
 </div>
 
-*The panels above are original README illustrations, not screenshots of a running app. Native gameplay screenshots will be added only after a real emulator or device capture is available; no mockup is presented as app evidence.*
+*The panels above are original README illustrations, not screenshots of a running app. The verified emulator capture below is genuine app UI, not a mockup.*
+
+### Verified native gameplay capture
+
+<div align="center">
+<img src="docs/screenshots/native-garden.png" alt="Clean Android emulator screenshot of the native cottage garden screen" width="380">
+</div>
+
+<sub>Captured at 1080 × 1920 on an Android 15 / API 35 AOSP emulator after `MainActivity` reached the foreground. The clean garden screen was visually reviewed in [passing CI run 45306221815](https://github.com/ShamelesAbyss/Ashlans-Moonlit-Garden-Android/actions/runs/45306221815); there is no splash screen or system dialog covering the game.</sub>
 
 ## What is in the garden
 
@@ -56,7 +64,7 @@ The rules preserve the original crop timings (22 / 32 / 42 active seconds), nine
 
 ## Install the development APK
 
-When a verified public development release is available, download the APK and its matching checksum from [GitHub Releases](https://github.com/ShamelesAbyss/Ashlans-Moonlit-Garden-Android/releases). This repository does not claim an APK or release exists until one appears there.
+Download the [v1.0.0-dev.1 development release](https://github.com/ShamelesAbyss/Ashlans-Moonlit-Garden-Android/releases/tag/v1.0.0-dev.1). The release includes the APK, matching `SHA256SUMS`, signing metadata, and the verified emulator screenshot. Verify the checksum before installing.
 
 The development APK is **debug-signed and debuggable**, not production-signed. Its signing identity is not a permanent update key; Android may reject installing a later build over an earlier one. Export a JSON backup before uninstalling or switching builds. The app ID is `com.shamelesabyss.ashlansmoonlitgarden.native`, distinct from the earlier edition so the two can coexist.
 
@@ -99,7 +107,7 @@ Requires a JDK 17+ and Android SDK Platform 35 / Build Tools 35.0.0. From the re
 
 The installable development APK is `app/build/outputs/apk/debug/app-debug.apk`. CI builds and verifies this debug-signed development variant. `:app:assembleRelease` is an optional local build-validation task; when no production signing key is configured, its output is unsigned and must not be distributed as a production release.
 
-The development environment used for the first build attempt is ARM64, while Android Gradle Plugin’s AAPT2 binary in the installed SDK is x86-64; resource processing therefore cannot be verified locally there. The x86 GitHub Actions runs provide authoritative build/test results. Earlier runs passed the JVM unit suite and debug APK checks, and one verified emulator installation plus foreground launch. The Compose instrumentation test is compiled but has not completed an emulator run; prior software-emulated TCG attempts failed before any test completed. The current device smoke is an ADB install/foreground-launch check plus a raw screenshot and logcat capture after a settle period—not an interaction test. Review each image before presenting it as gameplay; captures with a launch splash or system dialog are not clean gameplay screenshots.
+The development environment used for the first build attempt is ARM64, while Android Gradle Plugin’s AAPT2 binary in the installed SDK is x86-64; resource processing therefore cannot be verified locally there. The x86 GitHub Actions run [45306221815](https://github.com/ShamelesAbyss/Ashlans-Moonlit-Garden-Android/actions/runs/45306221815) passed the JVM unit/migration suite, debug APK checks, emulator install and foreground launch, and screenshot capture. The Compose instrumentation test source is compiled, but its on-device test has not completed; previous software-emulated TCG attempts failed before any test ran. The passing ADB smoke verifies launch and captures a clean visible garden screen, not garden interactions or exhaustive accessibility behavior. The screenshot above was reviewed before being added here.
 
 - [Build and CI details](BUILD.md)
 - [Evening guide](USER-GUIDE.md)

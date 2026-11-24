@@ -120,6 +120,7 @@ jobs:
           cp "$APK" Ashlans-Moonlit-Garden-${GITHUB_REF_NAME}-DEBUG.apk
           sha256sum "Ashlans-Moonlit-Garden-${GITHUB_REF_NAME}-DEBUG.apk" > SHA256SUMS
           cp signing.txt SIGNING-INFO.txt
+          cp docs/screenshots/native-garden.png Ashlans-Moonlit-Garden-${GITHUB_REF_NAME}-EMULATOR-SCREENSHOT.png
       - name: Publish clearly labeled development APK
         env:
           GH_TOKEN: ${{ github.token }}
@@ -138,5 +139,7 @@ jobs:
           Debug signing is not a durable update identity; later debug APKs may use a different certificate and Android may refuse an in-place update. Export JSON backups and keep them somewhere you control before uninstalling an existing native build. No production signing key is included in this repository or release.
 
           The original soundtrack is not bundled while public redistribution rights for the MP3 and cover remain unresolved. The app remains offline-first and does not request Internet permission.
+
+          The clean Android emulator capture shown in the repository README is included as a separate release asset; it is a real CI capture of the native garden screen.
           EOF
-          gh release create "$GITHUB_REF_NAME" "Ashlans-Moonlit-Garden-${GITHUB_REF_NAME}-DEBUG.apk" SHA256SUMS SIGNING-INFO.txt --title "$GITHUB_REF_NAME — Moonlit Rebirth (development build)" --notes-file RELEASE-NOTES.md
+          gh release create "$GITHUB_REF_NAME" "Ashlans-Moonlit-Garden-${GITHUB_REF_NAME}-DEBUG.apk" SHA256SUMS SIGNING-INFO.txt "Ashlans-Moonlit-Garden-${GITHUB_REF_NAME}-EMULATOR-SCREENSHOT.png" --title "$GITHUB_REF_NAME — Moonlit Rebirth (development build)" --notes-file RELEASE-NOTES.md --prerelease
