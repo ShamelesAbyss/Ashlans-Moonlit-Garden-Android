@@ -43,41 +43,7 @@ jobs:
           profile: pixel_2
           emulator-boot-timeout: 900
           disable-animations: true
-          script: |
-            set -eu
-            APP_ID=com.shamelesabyss.ashlansmoonlitgarden.native
-            MAIN_ACTIVITY=com.shamelesabyss.moonlitgarden.MainActivity
-            DIAG_DIR=app/build/reports/emulator-smoke
-            mkdir -p app/build/screenshots "$DIAG_DIR"
-            adb install -r app/build/outputs/apk/debug/app-debug.apk
-            adb logcat -c
-            adb shell am force-stop "$APP_ID"
-            if ! adb shell am start -W -n "$APP_ID/$MAIN_ACTIVITY" > "$DIAG_DIR/activity-start.txt" 2>&1; then
-              adb logcat -d -b all > "$DIAG_DIR/logcat.txt" || true
-              cat "$DIAG_DIR/activity-start.txt"
-              exit 1
-            fi
-            started=false
-            for attempt in $(seq 1 60); do
-              if adb shell pidof "$APP_ID" 2>/dev/null | tr -d '\r' | grep -Eq '[0-9]'; then
-                started=true
-                break
-              fi
-              sleep 2
-            done
-            adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' > "$DIAG_DIR/resumed-activity.txt" || true
-            if [ "$started" != true ] || ! grep -F "$APP_ID" "$DIAG_DIR/resumed-activity.txt" > /dev/null; then
-              adb logcat -d -b all > "$DIAG_DIR/logcat.txt" || true
-              echo "Native activity did not remain running in the foreground."
-              cat "$DIAG_DIR/activity-start.txt"
-              cat "$DIAG_DIR/resumed-activity.txt"
-              exit 1
-            fi
-            sleep 5
-            adb shell screencap -p /sdcard/moonlit-garden.png
-            adb pull /sdcard/moonlit-garden.png app/build/screenshots/native-garden.png
-            test -s app/build/screenshots/native-garden.png
-            printf 'APK installed; MainActivity remained foreground; emulator screenshot captured.\n' > "$DIAG_DIR/result.txt"
+          script: bash ci-emulator-smoke.sh
       - name: Upload emulator launch diagnostics on failure
         if: failure()
         uses: actions/upload-artifact@v4
