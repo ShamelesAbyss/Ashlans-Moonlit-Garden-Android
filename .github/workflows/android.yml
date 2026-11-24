@@ -27,8 +27,8 @@ jobs:
           packages: platform-tools platforms;android-35 build-tools;35.0.0
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
-      - name: Run native game and migration unit tests
-        run: ./gradlew --no-daemon :app:testDebugUnitTest
+      - name: Run native game and migration unit tests; compile Compose instrumentation test
+        run: ./gradlew --no-daemon :app:testDebugUnitTest :app:compileDebugAndroidTestKotlin
       - name: Build installable debug-signed development APK
         run: ./gradlew --no-daemon :app:assembleDebug
       - name: Launch native APK on emulator and capture the garden
@@ -49,7 +49,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: moonlit-rebirth-emulator-diagnostics-${{ github.sha }}
-          path: app/build/reports/emulator-smoke/
+          path: |
+            app/build/reports/emulator-smoke/
+            app/build/screenshots/native-garden.png
           if-no-files-found: ignore
       - name: Verify package, debug identity, alignment and checksum
         shell: bash
@@ -81,6 +83,7 @@ jobs:
             app/build/outputs/apk/debug/signing.txt
             app/build/outputs/apk/debug/SHA256SUMS
             app/build/screenshots/native-garden.png
+            app/build/reports/emulator-smoke/
           if-no-files-found: error
 
   publish-development-release:

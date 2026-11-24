@@ -34,7 +34,26 @@ if [[ "$started" != true ]] || ! grep -F "$app_id" "$diagnostics/resumed-activit
     exit 1
 fi
 
-sleep 15
+garden_visible=false
+for attempt in {1..12}; do
+    adb shell uiautomator dump --compressed /data/local/tmp/moonlit-window.xml > "$diagnostics/uiautomator-dump.txt" 2>&1 || true
+    adb exec-out cat /data/local/tmp/moonlit-window.xml > "$diagnostics/window.xml" 2>/dev/null || true
+    if grep -Fq 'The cottage garden' "$diagnostics/window.xml" && grep -Fq 'Tend the nine beds' "$diagnostics/window.xml"; then
+        garden_visible=true
+        break
+    fi
+    sleep 10
+done
+
+if [[ "$garden_visible" != true ]]; then
+    adb logcat -d -b all > "$diagnostics/logcat.txt" || true
+    adb exec-out screencap -p > app/build/screenshots/native-garden.png || true
+    echo 'Compose garden text was not visible in the emulator accessibility hierarchy.' >&2
+    exit 1
+fi
+
+adb logcat -d -b all > "$diagnostics/logcat.txt"
+sleep 2
 adb exec-out screencap -p > app/build/screenshots/native-garden.png
 test -s app/build/screenshots/native-garden.png
-printf 'APK installed; MainActivity remained foreground; emulator screenshot captured.\n' > "$diagnostics/result.txt"
+printf 'APK installed; MainActivity remained foreground; garden and nine-bed controls were visible; emulator screenshot captured.\n' > "$diagnostics/result.txt"
