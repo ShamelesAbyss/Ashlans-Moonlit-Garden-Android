@@ -10,7 +10,7 @@ adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb logcat -c
 adb shell am force-stop "$app_id"
 
-if ! adb shell am start -W -n "$app_id/$main_activity" > "$diagnostics/activity-start.txt" 2>&1; then
+if ! adb shell am start -n "$app_id/$main_activity" > "$diagnostics/activity-start.txt" 2>&1; then
     adb logcat -d -b all > "$diagnostics/logcat.txt" || true
     cat "$diagnostics/activity-start.txt" >&2
     exit 1
@@ -34,8 +34,7 @@ if [[ "$started" != true ]] || ! grep -F "$app_id" "$diagnostics/resumed-activit
     exit 1
 fi
 
-sleep 5
-adb shell screencap -p /sdcard/moonlit-garden.png
-adb pull /sdcard/moonlit-garden.png app/build/screenshots/native-garden.png
+sleep 15
+adb exec-out screencap -p > app/build/screenshots/native-garden.png
 test -s app/build/screenshots/native-garden.png
 printf 'APK installed; MainActivity remained foreground; emulator screenshot captured.\n' > "$diagnostics/result.txt"
