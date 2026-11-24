@@ -39,7 +39,8 @@ jobs:
         with:
           api-level: 35
           arch: x86_64
-          target: google_apis
+          # This app has no Google Play Services dependency; the AOSP image is lighter for TCG.
+          target: default
           profile: pixel_2
           emulator-boot-timeout: 900
           disable-animations: true
