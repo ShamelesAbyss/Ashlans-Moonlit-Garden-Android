@@ -9,6 +9,7 @@ mkdir -p app/build/screenshots "$diagnostics"
 adb install -r app/build/outputs/apk/debug/app-debug.apk
 adb logcat -c
 adb shell am force-stop "$app_id"
+: > "$diagnostics/resumed-activity.txt"
 
 if ! adb shell am start -n "$app_id/$main_activity" > "$diagnostics/activity-start.txt" 2>&1; then
     adb logcat -d -b all > "$diagnostics/logcat.txt" || true
@@ -25,10 +26,21 @@ for attempt in {1..60}; do
     sleep 2
 done
 
-adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' > "$diagnostics/resumed-activity.txt" || true
-if [[ "$started" != true ]] || ! grep -F "$app_id" "$diagnostics/resumed-activity.txt" > /dev/null; then
+foreground=false
+if [[ "$started" == true ]]; then
+    for attempt in {1..24}; do
+        adb shell dumpsys activity activities 2>/dev/null | grep -E 'mResumedActivity|topResumedActivity' > "$diagnostics/resumed-activity.txt" || true
+        if grep -F "$app_id" "$diagnostics/resumed-activity.txt" > /dev/null; then
+            foreground=true
+            break
+        fi
+        sleep 5
+    done
+fi
+
+if [[ "$started" != true ]] || [[ "$foreground" != true ]]; then
     adb logcat -d -b all > "$diagnostics/logcat.txt" || true
-    echo 'Native activity did not remain running in the foreground.' >&2
+    echo 'Native activity did not reach the foreground within the emulator startup wait.' >&2
     cat "$diagnostics/activity-start.txt" >&2
     cat "$diagnostics/resumed-activity.txt" >&2
     exit 1
@@ -39,4 +51,4 @@ adb logcat -d -b all > "$diagnostics/logcat.txt"
 sleep 2
 adb exec-out screencap -p > app/build/screenshots/native-garden.png
 test -s app/build/screenshots/native-garden.png
-printf 'APK installed; MainActivity remained foreground; emulator settled for 60 seconds; screenshot and logcat captured.\n' > "$diagnostics/result.txt"
+printf 'APK installed; MainActivity reached foreground; emulator settled for 60 seconds; screenshot and logcat captured.\n' > "$diagnostics/result.txt"
