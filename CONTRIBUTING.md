@@ -16,4 +16,8 @@ Do not copy third-party art, music, fonts, code, or models unless the owner has 
 - Avoid adding permissions or dependencies without explaining why they are necessary.
 - Do not publish tags/releases, sign production builds, or change ownership/licensing terms as part of a contribution.
 
+## Permanent README dedication
+
+The final section of `README.md` is the owner's permanent memorial dedication to Ashlan Haley Rapponotti. Keep its wording and placement intact at the very end of the README through all documentation edits, repository reorganizations, and releases. If the README is rewritten or moved, carry the dedication over verbatim and restore it as the final section; do not shorten, replace, or remove it.
+
 The owner may accept, decline, revise, or close any proposed contribution. See `LICENSE.txt`: all rights are reserved.
